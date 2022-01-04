@@ -1,0 +1,240 @@
+:root {
+    --colour-neutral-hs: 0, 0%;
+    --colour-blue-hs: 210, 100%;
+    --colour-green-hs: 118, 62%;
+    --colour-orange-hs: 34, 100%;
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 12pt;
+    display: grid;
+    min-width: 84rem;
+}
+
+.calendar {
+    position: relative;
+    width: max(80rem, 80%);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+    justify-self: center;
+    align-self: center;
+}
+
+.month-view .header,
+.month-view .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .5rem;
+}
+
+.month-view .header div {
+    padding: .5rem;
+}
+
+.month-view .days-grid{
+    position: relative;
+}
+
+.month-view .days-grid .filler-1 {
+    grid-column: 1 /  span 1;
+}
+
+.month-view .days-grid .filler-2 {
+    grid-column: 1 /  span 2;
+}
+
+.month-view .days-grid .filler-3 {
+    grid-column: 1 /  span 3;
+}
+
+.month-view .days-grid .filler-4 {
+    grid-column: 1 /  span 4;
+}
+
+.month-view .days-grid .filler-5 {
+    grid-column: 1 /  span 5;
+}
+
+.month-view .days-grid .day {
+    border: 1px solid transparent;
+    background: transparent;
+    padding: .3rem .5rem;
+    border-radius: .25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    min-height: 5rem;
+}
+
+.month-view .days-grid button.day {
+    cursor: pointer;
+}
+
+.month-view .days-grid .day:hover {
+    border-color: hsl(var(--colour-neutral-hs), 90%);
+}
+
+.month-view .days-grid .day .day-num {
+    font-weight: bold;
+    border: unset;
+    background: unset;
+    padding: unset;
+    text-align: unset;
+    cursor: pointer;
+    display: flex;
+    gap: .5rem;
+}
+
+.month-view .days-grid .day .day-num .add-text {
+    display: none;
+}
+
+.month-view .days-grid button.day:hover .day-num .add-text,
+.month-view .days-grid .day .day-num:hover .add-text {
+    display: block;
+}
+
+.month-view .days-grid .day .event {
+    --lightness: 90%;
+
+    font-family: unset;
+    text-align: unset;
+    font-size: .8rem;
+    background: hsl(var(--colour-neutral-hs), var(--lightness));
+    border: 1px solid hsl(var(--colour-neutral-hs), calc(var(--lightness) - 5%));
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: border-color .05s ease-in-out, background-color .05s ease-in-out;
+}
+
+.month-view .days-grid .day .event:hover {
+    --lightness: 80%;
+}
+
+.month-view .days-grid .day .event:active {
+    --lightness: 75%;
+}
+
+.month-view .days-grid .day .event.event-call {
+    background: hsl(var(--colour-blue-hs), var(--lightness));
+    border-color: hsl(var(--colour-blue-hs), calc(var(--lightness) - 5%));
+}
+
+.month-view .days-grid .day .event.event-meeting {
+    background: hsl(var(--colour-green-hs), var(--lightness));
+    border-color: hsl(var(--colour-green-hs), calc(var(--lightness) - 5%));
+}
+
+.month-view .days-grid .day .event.event-out-of-office {
+    background: hsl(var(--colour-orange-hs), var(--lightness));
+    border-color: hsl(var(--colour-orange-hs), calc(var(--lightness) - 5%));
+}
+
+.forms-view {
+    position: relative;
+}
+
+.forms-view .event-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.forms-view .event-form.hidden {
+    display: none;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.input-container .form-input {
+    padding: .5rem .75rem;
+    border-radius: .25rem;
+    border: 1px solid hsl(var(--colour-neutral-hs), 90%);
+    box-shadow: 0 .15rem .1rem hsl(var(--colour-neutral-hs), 95%);
+    font-family: unset;
+}
+
+.input-container textarea.form-input {
+    resize: vertical;
+}
+
+.input-container .form-input:hover {
+    border-color: hsl(var(--colour-neutral-hs), 85%);
+    box-shadow: 0 .15rem .1rem hsl(var(--colour-neutral-hs), 90%);
+}
+
+.input-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.input-columns .button-container {
+    display: grid;
+}
+
+.button-container {
+    position: relative;
+}
+
+.button-container .input-button {
+    font-family: unset;
+    font-size: unset;
+    padding: 1rem 1.5rem;
+    border-radius: .25rem;
+    border: unset;
+    cursor: pointer;
+    font-weight: 600;
+    color: hsl(var(--colour-neutral-hs), 100%);
+    background-color: hsl(var(--colour-blue-hs), 50%);
+}
+
+.button-container .input-button.small {
+    padding: .5rem .75rem;
+}
+
+.button-container .input-button:hover {
+    background-color: hsl(var(--colour-blue-hs), 47.5%);
+    box-shadow: 0 .15rem .1rem hsl(var(--colour-neutral-hs), 90%);
+}
+
+.button-container .input-button:active {
+    background-color: hsl(var(--colour-blue-hs), 45%);
+    box-shadow: 0 .15rem .1rem hsl(var(--colour-neutral-hs), 90%);
+}
+
+.delete-popup {
+    background: hsl(var(--colour-neutral-hs), 100%);
+    position: absolute;
+    width: 20rem;
+    padding: 1rem;
+    box-shadow: 0 .5rem 1rem hsl(var(--colour-neutral-hs), 80%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: .25rem;
+}
+
+.delete-popup.hidden {
+    display: none;
+}
+
+.delete-popup h4,
+.delete-popup p {
+    margin: 0;
+}
