@@ -86,9 +86,13 @@ function getActiveMonthDate() {
     }
 }
 
-function setActiveMonthDate(year, month) {
-    activeMonthDate = new Date(year, month);
+function updateActiveMonthDate() {
     storage.setItem('activeMonth', JSON.stringify(activeMonthDate));
+}
+
+function adjustMonthDisplay() {
+    let monthText = document.querySelector('#month-text');
+    monthText.innerHTML = activeMonthDate.getFullYear() + ' ' + months[activeMonthDate.getMonth()];
 }
 
 function populateMonthsViewHeader() {
@@ -106,6 +110,7 @@ function populateMonthViewDaysGrid() {
     const monthEndsAt = new Date(activeMonthDate.getFullYear(), activeMonthDate.getMonth() + 1, 0);
 
     let monthsViewDaysGrid = document.querySelector('.calendar .month-view .days-grid');
+    monthsViewDaysGrid.innerHTML = "";
     
     if(monthStartsAt.getDay() - 1 >= 1) {
         let fillerCell = document.createElement('div');
@@ -174,7 +179,11 @@ function showDetailedView(event) {
 
     let eventForm = document.querySelector('#detailed-event-form');
     eventForm.querySelector('#title').value = event.title;
-    eventForm.querySelector('#date').value = eventDate.getFullYear() + '-' + eventDate.getMonth() + 1 + '-' + (eventDate.getDate() < 10 ? '0' + eventDate.getDate() : eventDate.getDate());
+    let month = eventDate.getMonth() + 1;
+    month = month < 10 ? '0' + month : month; 
+    let day = eventDate.getDate();
+    day = day < 10 ? '0' + day : day;
+    eventForm.querySelector('#date').value = eventDate.getFullYear() + '-' + month + '-' + day;
     eventForm.querySelector('#start-time').value = event.startTime;
     eventForm.querySelector('#end-time').value = event.endTime;
     eventForm.querySelector('#type').value = event.type;
@@ -198,8 +207,12 @@ function showAddEventForm(day = null) {
         toggleFormVisibility('new-event-form', false);
     };
     
+    console.log(activeMonthDate.getMonth())
     if(day) {
-        eventForm.querySelector('#date').value = activeMonthDate.getFullYear() + '-' + activeMonthDate.getMonth() + 1 + '-' + (day < 10 ? '0' + day : day);
+        let month = activeMonthDate.getMonth() + 1;
+        month = month < 10 ? '0' + month : month; 
+        day = day < 10 ? '0' + day : day;
+        eventForm.querySelector('#date').value = activeMonthDate.getFullYear() + '-' + month + '-' + day;
     }
 }
 
@@ -248,16 +261,28 @@ function onNewEventFormSubmit(e) {
 window.onload = function() {
     getEvents();
     getActiveMonthDate();
+    adjustMonthDisplay();
     populateMonthsViewHeader();
     populateMonthViewDaysGrid();
-
-    let monthText = document.querySelector('#month-text');
-    monthText.innerHTML = months[activeMonthDate.getMonth()];
 
     deletePopup = document.querySelector('#delete-popup');
     let newEventForm = document.querySelector('#new-event-form');
     let newEventFormStartTime = newEventForm.querySelector('#start-time');
     let newEventFormEndTime = newEventForm.querySelector('#end-time');
+
+    document.querySelector('#previous-month').onclick = function() {
+        activeMonthDate.setMonth(activeMonthDate.getMonth() - 1);
+        updateActiveMonthDate();
+        adjustMonthDisplay();
+        populateMonthViewDaysGrid();
+    };
+
+    document.querySelector('#next-month').onclick = function() {
+        activeMonthDate.setMonth(activeMonthDate.getMonth() + 1);
+        updateActiveMonthDate();
+        adjustMonthDisplay();
+        populateMonthViewDaysGrid();
+    };
 
     newEventForm.onsubmit = function(e) {
         onNewEventFormSubmit(e);

@@ -34,11 +34,36 @@ body {
     gap: .5rem;
 }
 
+.month-view .month-title {
+    display: flex;
+    gap: 1rem;
+}
+
+.month-view .month-title .switch-button {
+    border: unset;
+    border-radius: .25rem;
+    width: 2rem;
+    background: transparent;
+    cursor: pointer;
+    color: hsl(var(--colour-neutral-hs), 0%);
+    user-select: none;
+}
+
+.month-view .month-title .switch-button:hover {
+    background-color: hsl(var(--colour-neutral-hs), 95%);
+    box-shadow: 0 .15rem .1rem hsl(var(--colour-neutral-hs), 90%);
+}
+
+.month-view .month-title .switch-button:active {
+    background-color: hsl(var(--colour-neutral-hs), 90%);
+    box-shadow: 0 .15rem .1rem hsl(var(--colour-neutral-hs), 90%);
+}
+
 .month-view .header div {
     padding: .5rem;
 }
 
-.month-view .days-grid{
+.month-view .days-grid {
     position: relative;
 }
 
