@@ -250,7 +250,7 @@ function onNewEventFormSubmit(e) {
     const data = new FormData(e.target);
     const value = Object.fromEntries(data);
 
-    if(!eventTypes.includes(value['type'])) {
+    if(!eventTypes.includes(value['type']) || value['title'].trim() === '') {
         return;
     }
 
